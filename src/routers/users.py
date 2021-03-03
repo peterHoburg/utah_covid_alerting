@@ -1,6 +1,8 @@
 from fastapi import Depends, APIRouter
+from sqlalchemy.orm import Session
 
-from src.dependencies import get_current_active_user
+from src.dependencies import get_current_active_user, get_db
+from src.utils.database import put_user
 from src.models.api import User, UserInDB
 
 router = APIRouter(
@@ -9,9 +11,10 @@ router = APIRouter(
 )
 
 
-@router.get("/me", response_model=User)
-async def read_users_me(current_user: UserInDB = Depends(get_current_active_user)):
-    return User(**current_user.dict())
+@router.post("/new")
+async def new_(new_user: UserInDB, db: Session = Depends(get_db)):
+    put_user(db, new_user)
+
 
 
 @router.get("/me/items")

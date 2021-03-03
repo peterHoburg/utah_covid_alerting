@@ -31,3 +31,10 @@ class User(BaseModel):
 
 class UserInDB(User):
     password: str
+
+
+class Email(BaseModel):
+    address: str
+    uuid: str
+    verified: bool = False
+    verification_string: str
