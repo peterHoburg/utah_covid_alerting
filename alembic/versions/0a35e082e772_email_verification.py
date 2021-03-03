@@ -1,4 +1,4 @@
-"""Email verfication
+"""Email verification
 
 Revision ID: 0a35e082e772
 Revises: 166f8d9e46bd
