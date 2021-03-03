@@ -1,0 +1,6 @@
+-r ./requirements.txt
+-c ./requirements.txt
+
+ipdb
+pytest
+pylint

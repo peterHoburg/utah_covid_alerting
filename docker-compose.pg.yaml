@@ -1,0 +1,7 @@
+version: "3.8"
+services:
+
+  postgres:
+    volumes:
+      - ./data/starting_data/:/docker-entrypoint-initdb.d/
+

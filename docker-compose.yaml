@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ENVIRONMENT: "api"
+        DEGUB: "true"
+        DEV: "true"
+    command: [ "uvicorn", "src.main:app", "--reload", "--host 0.0.0.0", "--reload-dir", "src" ]
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/opt/src
+    environment:
+      - POSTGRES_DATABASE_URL_ENV=postgresql://test:test@postgres/test
+    depends_on:
+      - postgres
+    networks:
+      - test_network
+
+  postgres:
+    image: postgres:13-alpine
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - PGPORT=5432
+      - POSTGRES_DB=test
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+    networks:
+      - test_network
+
+networks:
+  test_network:
+    driver: bridge

@@ -1,0 +1,1 @@
+INSERT INTO public."user" (username, full_name, email, password, enabled) VALUES ('johndoe', 'John Doe', 'john.doe@gmail.com', '$2b$12$4eYKBVyq5jU.GC.b94eZKO9Uay7V.0xIhwVRG7eyIoEn3sa8Sr7ga', true);

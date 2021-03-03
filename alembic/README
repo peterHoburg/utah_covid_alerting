@@ -1,0 +1,7 @@
+`docker-compose run interactive`
+
+`alembic revision -m "<description>"`
+
+`alembic upgrade head`
+
+`alembic downgrade -1`

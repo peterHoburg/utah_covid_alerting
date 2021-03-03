@@ -1,0 +1,5 @@
+from src.main import hypothesis_example
+
+
+def hypothesis_example_test():
+    hypothesis_example()
