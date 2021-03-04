@@ -2,7 +2,7 @@ from fastapi import Depends, APIRouter, HTTPException
 from sqlalchemy.orm import Session
 
 from api.dependencies import get_db
-from api.models.covid_data.school_cases_by_district import SchoolDistricts
+from models.covid_data.school_cases_by_district import SchoolDistricts
 from utils.database import verify_email
 
 router = APIRouter(
