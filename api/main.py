@@ -5,9 +5,9 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.exc import IntegrityError
 from starlette.requests import Request
 
-from src.routers import auth
-from src.routers import users
-from src.routers import email
+from api.routers import auth
+from api.routers import users
+from api.routers import email
 
 app = FastAPI(
     title="FastAPI example project",

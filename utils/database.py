@@ -3,8 +3,8 @@ import uuid
 
 from sqlalchemy.orm import Session
 
-from src.models import sql
-from src.models.api import UserInDB, Email
+from api.models import sql
+from api.models.api import UserInDB, Email
 
 
 def get_user(db: Session, username: str) -> UserInDB:

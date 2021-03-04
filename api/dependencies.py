@@ -2,10 +2,10 @@ from fastapi import Depends, HTTPException, status
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 
-from src.conf.config import oauth2_scheme, SECRET_KEY, ALGORITHM, SessionLocal
-from src.models.api import UserInDB
-from src.utils.auth import username_from_jwt_subject
-from src.utils.database import get_user
+from conf.config import oauth2_scheme, SECRET_KEY, ALGORITHM, SessionLocal
+from api.models.api import UserInDB
+from utils.auth import username_from_jwt_subject
+from utils.database import get_user
 
 
 def get_db():

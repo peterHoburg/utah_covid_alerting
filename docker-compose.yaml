@@ -8,11 +8,11 @@ services:
         ENVIRONMENT: "api"
         DEGUB: "true"
         DEV: "true"
-    command: [ "uvicorn", "src.main:app", "--reload", "--host 0.0.0.0", "--reload-dir", "src" ]
+    command: [ "uvicorn", "api.main:app", "--reload", "--host 0.0.0.0", "--reload-dir", "api" ]
     ports:
       - "8000:8000"
     volumes:
-      - ./src:/opt/src
+      - ./api:/opt/api
     environment:
       - POSTGRES_DATABASE_URL_ENV=postgresql://test:test@postgres/test
     depends_on:

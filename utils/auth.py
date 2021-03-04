@@ -4,9 +4,9 @@ from typing import Union
 from jose import jwt
 from sqlalchemy.orm import Session
 
-from src.conf.config import pwd_context, SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
-from src.models.api import UserInDB, TokenPayload
-from src.utils.database import get_user
+from conf.config import pwd_context, SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from api.models.api import UserInDB, TokenPayload
+from utils import get_user
 
 __all__ = ["authenticate_user", "create_access_token", "username_from_jwt_subject"]
 

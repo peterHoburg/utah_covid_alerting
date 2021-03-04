@@ -1,4 +1,4 @@
-from src.main import hypothesis_example
+from api.main import hypothesis_example
 
 
 def hypothesis_example_test():

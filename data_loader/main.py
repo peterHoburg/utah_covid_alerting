@@ -1,6 +1,6 @@
 import csv
 
-from src.models.covid_data.school_cases_by_district import SchoolCasesByDistrict
+from api.models.covid_data.school_cases_by_district import SchoolCasesByDistrict
 
 
 def main():

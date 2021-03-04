@@ -2,5 +2,5 @@ version: "3.8"
 services:
 
   api:
-    command: [ "python", "src/main.py" ]
+    command: [ "python", "api/main.py" ]
 
