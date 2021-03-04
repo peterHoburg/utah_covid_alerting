@@ -6,3 +6,4 @@ python-jose[cryptography]
 passlib[bcrypt]
 sqlalchemy
 python-multipart
+py3-validate-email

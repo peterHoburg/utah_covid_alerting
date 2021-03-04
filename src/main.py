@@ -1,14 +1,10 @@
-from datetime import datetime
-from enum import Enum
-from typing import Optional
-
 import uvicorn
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
-from pydantic import BaseModel
+from sqlalchemy.exc import IntegrityError
+from starlette.requests import Request
 
-from src.dependencies import get_current_active_user
-from src.models.api import User
 from src.routers import auth
 from src.routers import users
 
@@ -23,36 +19,21 @@ app.include_router(users.router)
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
-class TestEnum(Enum):
-    test_val1 = "test1"
-    test_val2 = "test2"
-
-
-class BodyExample(BaseModel):
-    name: str
-    age: int
-    date: Optional[datetime]
+@app.exception_handler(IntegrityError)
+async def integrity_error_handler(request: Request, exc: IntegrityError):
+    details = "Invalid data"
+    if "duplicate key" in str(exc):
+        # TODO this could be made more specific. This could also be removed as it leaks information.
+        details = "This username or email already exists, please choose another."
+    return JSONResponse(
+        status_code=501,
+        content={"detail": details}
+    )
 
 
 @app.get("/", include_in_schema=False)
 def root():
     return {"hello": "world"}
-
-
-@app.get("/enum_test/{enum_val}")
-def test_enum(enum_val: TestEnum, user: User = Depends(get_current_active_user)):
-    return {"value": enum_val}
-
-
-@app.get("/query_example/")
-async def query_example(query_option_1: TestEnum, query_option_2: bool = False, query_option_3: Optional[str] = None,
-                        token: str = Depends(oauth2_scheme)):
-    return {"done": "done"}
-
-
-@app.post("/body_example/")
-async def body_example(example: BodyExample):
-    pass
 
 
 if __name__ == '__main__':
