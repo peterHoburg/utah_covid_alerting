@@ -4,7 +4,7 @@ from typing import Union
 from jose import jwt
 from sqlalchemy.orm import Session
 
-from conf.config import pwd_context, SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from config.consts import pwd_context, SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 from api.models.api import UserInDB, TokenPayload
 from utils import get_user
 

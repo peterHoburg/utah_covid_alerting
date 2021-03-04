@@ -1,6 +1,6 @@
 from sqlalchemy import Boolean, Column, String, ForeignKey
 
-from conf.config import Base
+from config.consts import Base
 
 
 class Email(Base):
