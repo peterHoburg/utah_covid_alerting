@@ -6,16 +6,11 @@ from src.models.api import UserInDB
 from src.utils.database import put_user
 
 router = APIRouter(
-    prefix="/users",
-    tags=["users"]
+    prefix="/user",
+    tags=["user"]
 )
 
 
-@router.post("/new")
+@router.post("", status_code=201)
 async def new_(new_user: UserInDB, db: Session = Depends(get_db)):
     put_user(db, new_user)
-
-
-@router.get("/me/items")
-async def read_own_items(current_user: UserInDB = Depends(get_current_active_user)):
-    return [{"item_id": "Foo", "owner": current_user.username}]

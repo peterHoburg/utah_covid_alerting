@@ -7,6 +7,7 @@ from starlette.requests import Request
 
 from src.routers import auth
 from src.routers import users
+from src.routers import email
 
 app = FastAPI(
     title="FastAPI example project",
@@ -15,6 +16,7 @@ app = FastAPI(
 
 app.include_router(auth.router)
 app.include_router(users.router)
+app.include_router(email.router)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -26,7 +28,7 @@ async def integrity_error_handler(request: Request, exc: IntegrityError):
         # TODO this could be made more specific. This could also be removed as it leaks information.
         details = "This username or email already exists, please choose another."
     return JSONResponse(
-        status_code=501,
+        status_code=403,
         content={"detail": details}
     )
 
