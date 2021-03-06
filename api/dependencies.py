@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from config.consts import oauth2_scheme, SECRET_KEY, ALGORITHM, SessionLocal
 from models.api import UserInDB
 from utils.auth import username_from_jwt_subject
-from utils.database import get_user
+from utils.database import get_user, get_email
 
 
 def get_db():
@@ -42,3 +42,12 @@ async def get_current_active_user(current_user: UserInDB = Depends(get_current_u
     if current_user.enabled is False:
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
+
+
+async def is_email_verified(current_user: UserInDB = Depends(get_current_active_user),
+                            db: Session = Depends(get_db)) -> bool:
+    email = get_email(db, current_user.email)
+    if email.verified is True:
+        return True
+    else:
+        raise HTTPException(status_code=403, detail="Email not verified")

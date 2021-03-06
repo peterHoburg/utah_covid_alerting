@@ -9,9 +9,3 @@ class RetryError(BaseCustomException):
     """
     Raised when retries have been exceeded
     """
-
-
-class HashValidationError(BaseCustomException):
-    """
-    Raised when hash validation fails
-    """

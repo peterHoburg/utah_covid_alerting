@@ -4,7 +4,7 @@ import uuid
 from sqlalchemy.orm import Session
 
 from models import sql
-from models.api import UserInDB, Email
+from models.api import UserInDB, Email, Subscription
 
 
 def get_user(db: Session, username: str) -> UserInDB:
@@ -32,6 +32,7 @@ def put_user(db: Session, user: UserInDB):
     user = sql.User(**user.dict())
     try:
         db.add(email)
+        db.commit()
         db.add(user)
     except Exception:
         db.rollback()
@@ -52,3 +53,20 @@ def verify_email(db: Session, uuid_str: str, verification_string: str) -> bool:
     except Exception:
         db.rollback()
         raise
+
+
+def get_email(db: Session, email: str) -> Email:
+    return Email.from_orm(db.query(sql.Email).filter(sql.Email.address == email).first())
+
+
+def add_subscription(db: Session, subscription: Subscription):
+    sub_dict = subscription.dict()
+    sub_dict["district"] = subscription.district.name
+    subscription = sql.Subscription(**sub_dict)
+    try:
+        db.add(subscription)
+    except Exception:
+        db.rollback()
+        raise
+    finally:
+        db.commit()

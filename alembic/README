@@ -1,4 +1,4 @@
-`docker-compose run interactive`
+`make interactive`
 
 `alembic revision -m "<description>"`
 

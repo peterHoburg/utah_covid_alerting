@@ -18,3 +18,10 @@ class User(Base):
     email = Column(String, ForeignKey(Email.address))
     password = Column(String)
     enabled = Column(Boolean)
+
+
+class Subscription(Base):
+    __tablename__ = "subscription"
+    id = Column(String, primary_key=True, index=True)
+    email = Column(String, ForeignKey(Email.address), index=True)
+    district = Column(String, nullable=False)

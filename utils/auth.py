@@ -8,7 +8,7 @@ from config.consts import pwd_context, SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIR
 from models.api import UserInDB, TokenPayload
 from utils.database import get_user
 
-__all__ = ["authenticate_user", "create_access_token", "username_from_jwt_subject"]
+__all__ = ["authenticate_user", "create_access_token", "username_from_jwt_subject", "generate_password_hash"]
 
 
 def authenticate_user(db: Session, username: str, password: str):
@@ -49,9 +49,9 @@ def generate_jwt_subject(username: str) -> str:
     return subject
 
 
+def generate_password_hash(password):
+    return pwd_context.hash(password)
+
+
 def _verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
-
-
-def _get_password_hash(password):
-    return pwd_context.hash(password)
