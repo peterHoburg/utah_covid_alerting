@@ -47,3 +47,26 @@ def put_(db: Session, user: UserInDB):
         raise
     finally:
         db.commit()
+
+
+def delete_(db: Session, user: UserInDB):
+    try:
+        db.query(sql.User).filter(sql.User.email == user.email).delete()
+        db.query(sql.Subscription).filter(sql.Subscription.email == user.email).delete()
+        db.query(sql.Email).filter(sql.Email.address == user.email).delete()
+    except Exception:
+        db.rollback()
+        raise
+    finally:
+        db.commit()
+
+
+def update_status(db: Session, user: UserInDB, status: bool):
+    try:
+        data = db.query(sql.User).filter(sql.User.email == user.email).first()
+        data.enabled = status
+    except Exception:
+        db.rollback()
+        raise
+    finally:
+        db.commit()

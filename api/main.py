@@ -20,6 +20,9 @@ app.include_router(subscriptions.router)
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
+# TODO
+#   Add password resetting via email
+
 @app.exception_handler(IntegrityError)
 async def integrity_error_handler(request: Request, exc: IntegrityError):
     details = "Invalid data"
