@@ -32,6 +32,14 @@ update_deps:
 	bash update_deps.sh
 
 
+### Commands to work with docker
+
+kill_all_containers:
+	docker ps -q | xargs -r docker kill
+
+remove_all_docker_data: kill_all_containers
+	docker system prune -a -f --volumes
+
 
 ### Commands starting with _ are not to be used in the CLI, but used in other make commands
 
