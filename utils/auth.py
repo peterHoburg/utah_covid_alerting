@@ -6,13 +6,13 @@ from sqlalchemy.orm import Session
 
 from config.consts import pwd_context, SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 from models.api import UserInDB, TokenPayload
-from utils.database import get_user
+from utils.database.db_user import get_
 
 __all__ = ["authenticate_user", "create_access_token", "username_from_jwt_subject", "generate_password_hash"]
 
 
 def authenticate_user(db: Session, username: str, password: str):
-    user = get_user(db, username)
+    user = get_(db, username)
     if not user:
         return False
     if not _verify_password(password, user.password):
