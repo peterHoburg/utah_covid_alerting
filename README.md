@@ -15,7 +15,7 @@ docker containers. This is orchestrated with docker-compose and a Makefile.
 ## Getting started
 
 TLWR: Run `make initialize_pg` then `make api`. Go to `localhost:8000/docs`. Click "Authorize" in the top right. Put in
-Username: `johndoe` Password:`123`. Click around on the routes and try them out.
+Username: `test` Password:`test` and the email is `test@gmail.com`. Click around on the routes and try them out.
 
 
 
@@ -33,7 +33,7 @@ To start the api, PG DB, and link them run `make api`. You can access the API on
 `localhost:5432` using Username: `test` Password: `test` and DB: `test`. Easy to remember ;)
 
 This project includes production grade auth with username/password and JTWs. To "login" (after running `make initialize_pg`)
-you can use Username: `johndoe` Password: `123`. The API docs include auth support, and a fully interactive environment
+you can use Username: `test` Password: `test`. The API docs include auth support, and a fully interactive environment
 to interact with the example routes! Give it a try!
 
 If you want to just spin up the PG DB run `make db_only`
