@@ -6,7 +6,10 @@ interactive: _base
 
 # Starts the API using uvicorn and auto-reloads when your code is saved
 api: _base
-	docker-compose -f docker-compose.yaml up --abort-on-container-exit --remove-orphans
+	docker-compose -f docker-compose.yaml up --abort-on-container-exit --remove-orphans api
+
+data_loader: _base
+	docker-compose -f docker-compose.yaml up --abort-on-container-exit --remove-orphans data_loader
 
 # Just starts the postgres DB.
 db_only: _base

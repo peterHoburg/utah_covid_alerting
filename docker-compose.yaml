@@ -15,8 +15,31 @@ services:
       - .:/opt
       - /opt/data/postgres
     environment:
-      - POSTGRES_DATABASE_URL_ENV=postgresql://test:test@postgres/test
+      POSTGRES_DATABASE_URL_ENV: "postgresql://test:test@postgres/test"
     depends_on:
+      - postgres
+    networks:
+      - test_network
+
+  data_loader:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ENVIRONMENT: "data_loader"
+        DEGUB: "true"
+        DEV: "true"
+    command: [ "python", "data_loader/main.py" ]
+    volumes:
+      - .:/opt
+      - /opt/data/postgres
+    environment:
+      POSTGRES_DATABASE_URL_ENV: "postgresql://test:test@postgres/test"
+      AWS_ACCESS_KEY_ID: "key"
+      AWS_SECRET_ACCESS_KEY: "secret"
+      AWS_DEFAULT_REGION: "us-west-1"
+    depends_on:
+      - s3
       - postgres
     networks:
       - test_network
@@ -28,12 +51,23 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - PGPORT=5432
-      - POSTGRES_DB=test
-      - POSTGRES_USER=test
-      - POSTGRES_PASSWORD=test
+      PGPORT: "5432"
+      POSTGRES_DB: "test"
+      POSTGRES_USER: "test"
+      POSTGRES_PASSWORD: "test"
     networks:
       - test_network
+
+  s3:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./data/s3:/data
+    environment:
+      MINIO_ACCESS_KEY: "key"
+      MINIO_SECRET_KEY: "secret"
+    command: [ "server", "/data" ]
 
 networks:
   test_network:
