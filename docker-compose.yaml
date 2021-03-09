@@ -15,11 +15,11 @@ services:
       - .:/opt
       - /opt/data/postgres
     environment:
-      POSTGRES_DATABASE_URL_ENV: "postgresql://test:test@postgres/test"
+      POSTGRES_DATABASE_URL_ENV: "postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}"
     depends_on:
       - postgres
     networks:
-      - test_network
+      - local_network
 
   data_loader:
     build:
@@ -34,29 +34,29 @@ services:
       - .:/opt
       - /opt/data/postgres
     environment:
-      POSTGRES_DATABASE_URL_ENV: "postgresql://test:test@postgres/test"
-      AWS_ACCESS_KEY_ID: "key"
-      AWS_SECRET_ACCESS_KEY: "secret"
-      AWS_DEFAULT_REGION: "us-west-1"
+      POSTGRES_DATABASE_URL_ENV: "postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}"
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+      AWS_DEFAULT_REGION: "${AWS_DEFAULT_REGION}"
     depends_on:
       - s3
       - postgres
     networks:
-      - test_network
+      - local_network
 
   postgres:
     image: postgres:13-alpine
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "${PGPORT}:${PGPORT}"
     environment:
-      PGPORT: "5432"
-      POSTGRES_DB: "test"
-      POSTGRES_USER: "test"
-      POSTGRES_PASSWORD: "test"
+      PGPORT: "${PGPORT}"
+      POSTGRES_DB: "${PGDATABASE}"
+      POSTGRES_USER: "${PGUSER}"
+      POSTGRES_PASSWORD: "${PGPASSWORD}"
     networks:
-      - test_network
+      - local_network
 
   s3:
     image: minio/minio
@@ -65,10 +65,10 @@ services:
     volumes:
       - ./data/s3:/data
     environment:
-      MINIO_ACCESS_KEY: "key"
-      MINIO_SECRET_KEY: "secret"
+      MINIO_ACCESS_KEY: "${AWS_ACCESS_KEY_ID}"
+      MINIO_SECRET_KEY: "${AWS_SECRET_ACCESS_KEY}"
     command: [ "server", "/data" ]
 
 networks:
-  test_network:
+  local_network:
     driver: bridge

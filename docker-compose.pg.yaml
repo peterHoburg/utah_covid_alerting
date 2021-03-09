@@ -4,4 +4,3 @@ services:
   postgres:
     volumes:
       - ./data/starting_data/:/docker-entrypoint-initdb.d/
-

@@ -1,19 +1,23 @@
+include local.env
+export
+env_file_name="local.env"
+
 ### Commands to start docker containers and interact with them
 
 # Starts a shell in the Dockerfile. This is used to run migrations or other commands in the same env as the code
 interactive: _base
-	docker-compose -f docker-compose.yaml -f docker-compose.interactive.yaml run --rm api
+	docker-compose --env-file $(env_file_name) -f docker-compose.yaml -f docker-compose.interactive.yaml run --rm api
 
 # Starts the API using uvicorn and auto-reloads when your code is saved
 api: _base
-	docker-compose -f docker-compose.yaml up --abort-on-container-exit --remove-orphans api
+	docker-compose --env-file $(env_file_name) -f docker-compose.yaml up --abort-on-container-exit --remove-orphans api
 
 data_loader: _base
-	docker-compose -f docker-compose.yaml up --abort-on-container-exit --remove-orphans data_loader
+	docker-compose --env-file $(env_file_name) -f docker-compose.yaml up --abort-on-container-exit --remove-orphans data_loader
 
 # Just starts the postgres DB.
 db_only: _base
-	docker-compose up --abort-on-container-exit --remove-orphans postgres
+	docker-compose --env-file $(env_file_name) up --abort-on-container-exit --remove-orphans postgres
 
 
 ### Commands to alter postgres data
@@ -23,9 +27,9 @@ initialize_pg: _base _remove_all_pg_data run_migrations _insert_pg_data
 	$(MAKE) _down
 
 run_migrations: _down
-	docker-compose up -d postgres
+	docker-compose --env-file $(env_file_name) up -d postgres
 	sleep 10
-	docker-compose run --rm api "alembic upgrade head"
+	docker-compose --env-file $(env_file_name) run --rm api "alembic upgrade head"
 	$(MAKE) _down
 
 
@@ -47,10 +51,10 @@ remove_all_docker_data: kill_all_containers
 ### Commands starting with _ are not to be used in the CLI, but used in other make commands
 
 _build:
-	docker-compose build -q
+	docker-compose --env-file $(env_file_name) build -q
 
 _down:
-	docker-compose down -v --remove-orphans
+	docker-compose --env-file $(env_file_name) down -v --remove-orphans
 
 _base: _down _build
 
@@ -59,7 +63,6 @@ _remove_all_pg_data:
 	sudo rm -r data/postgres
 
 _insert_pg_data: _down
-	docker-compose -f docker-compose.yaml -f docker-compose.pg.yaml up -d postgres
+	docker-compose --env-file $(env_file_name) -f docker-compose.yaml  -f docker-compose.pg.yaml up -d postgres
 	sleep 5
-	docker-compose exec postgres psql test test -f /docker-entrypoint-initdb.d/pg_inserts.sql
-
+	docker-compose exec postgres psql $(PGDATABASE) $(PGUSER) -f /docker-entrypoint-initdb.d/pg_inserts.sql

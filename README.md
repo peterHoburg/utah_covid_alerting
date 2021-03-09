@@ -14,7 +14,10 @@ docker containers. This is orchestrated with docker-compose and a Makefile.
 
 ## Getting started
 
-TLWR: Run `make initialize_pg` then `make api`. Go to `localhost:8000/docs`. Click "Authorize" in the top right. Put in
+TLWR:
+Copy `local.env` into `.env`,
+
+Run `make initialize_pg` then `make api`. Go to `localhost:8000/docs`. Click "Authorize" in the top right. Put in
 Username: `test` Password:`test` and the email is `test@gmail.com`. Click around on the routes and try them out.
 
 
