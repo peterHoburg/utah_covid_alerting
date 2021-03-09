@@ -1,5 +1,8 @@
 import os
+import re
 
+import boto3
+from botocore.config import Config
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 from sqlalchemy import create_engine
@@ -21,3 +24,11 @@ engine = create_engine(POSTGRES_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
+
+UTAH_COVID19_DOWNLOAD_URL = "https://coronavirus-dashboard.utah.gov/Utah_COVID19_data.zip"
+LOCAL_DATA_PATH = "data/utah"
+
+YYYY_MM_DD_REGEX = re.compile("2\d{3}-\d{2}-\d{2}")
+
+S3_CLIENT = boto3.client('s3', config=Config(signature_version='s3v4'), endpoint_url=os.environ.get('S3_ENDPOINT_URL'))
+S3_DATA_BUCKET = "utah-data"

@@ -1,6 +1,8 @@
 version: "3.8"
 services:
   api:
+    env_file:
+      - local.env
     build:
       context: .
       dockerfile: Dockerfile
@@ -22,6 +24,8 @@ services:
       - local_network
 
   data_loader:
+    env_file:
+      - local.env
     build:
       context: .
       dockerfile: Dockerfile
@@ -38,6 +42,7 @@ services:
       AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
       AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
       AWS_DEFAULT_REGION: "${AWS_DEFAULT_REGION}"
+      S3_ENDPOINT_URL: "${S3_ENDPOINT_URL}"
     depends_on:
       - s3
       - postgres
@@ -45,6 +50,8 @@ services:
       - local_network
 
   postgres:
+    env_file:
+      - local.env
     image: postgres:13-alpine
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
@@ -59,6 +66,8 @@ services:
       - local_network
 
   s3:
+    env_file:
+      - local.env
     image: minio/minio
     ports:
       - "9000:9000"
@@ -68,6 +77,8 @@ services:
       MINIO_ACCESS_KEY: "${AWS_ACCESS_KEY_ID}"
       MINIO_SECRET_KEY: "${AWS_SECRET_ACCESS_KEY}"
     command: [ "server", "/data" ]
+    networks:
+      - local_network
 
 networks:
   local_network:

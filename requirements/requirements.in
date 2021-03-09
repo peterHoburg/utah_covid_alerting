@@ -7,3 +7,6 @@ passlib[bcrypt]
 sqlalchemy
 python-multipart
 py3-validate-email
+requests
+boto3
+botocore

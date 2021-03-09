@@ -108,3 +108,4 @@ venv.bak/
 .idea/*
 /data/postgres/
 /pycharm/
+/data/s3/.minio.sys/
