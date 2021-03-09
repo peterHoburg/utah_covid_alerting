@@ -10,5 +10,21 @@ def main():
             print(SchoolCasesByDistrict(**line))
 
 
+def get_data_from_api():
+    pass
+
+
+def load_data_into_s3():
+    pass
+
+
+def parse_data():
+    pass
+
+
+def load_data_into_pg():
+    pass
+
+
 if __name__ == '__main__':
     main()
