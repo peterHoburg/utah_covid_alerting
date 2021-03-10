@@ -26,7 +26,6 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 UTAH_COVID19_DOWNLOAD_URL = "https://coronavirus-dashboard.utah.gov/Utah_COVID19_data.zip"
-LOCAL_DATA_PATH = "data/utah"
 
 YYYY_MM_DD_REGEX = re.compile("2\d{3}-\d{2}-\d{2}")
 
