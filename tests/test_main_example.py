@@ -13,3 +13,7 @@ def test_env_vars():
     for env_var in env_var_list:
         print(env_var)
         print(os.environ.get(env_var))
+
+
+def test_failing_expected():
+    raise KeyError

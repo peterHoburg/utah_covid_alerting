@@ -60,9 +60,6 @@ services:
         DEGUB: "true"
         DEV: "true"
     command: [ "pytest", "-rP" ]
-    volumes:
-      - .:/opt
-      - /opt/data/postgres
     environment:
       POSTGRES_DATABASE_URL_ENV: "postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}"
       AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
