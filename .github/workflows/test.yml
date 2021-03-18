@@ -1,0 +1,14 @@
+name: Pylint
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: docker-compose --env-file local.env -f docker-compose.yaml run --rm test
