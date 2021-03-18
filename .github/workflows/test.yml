@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Docker-compose build
-        run: source 'local.env' && docker-compose build --parallel
+        run: docker-compose --env-file local.env build --parallel
       
   tests:
     needs: build
