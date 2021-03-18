@@ -10,5 +10,5 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install dependencies
+    - name: Run docker-compose test
       run: docker-compose --env-file local.env -f docker-compose.yaml run --rm test
