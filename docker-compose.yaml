@@ -49,6 +49,34 @@ services:
     networks:
       - local_network
 
+  test:
+    env_file:
+      - local.env
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ENVIRONMENT: "data_loader"
+        DEGUB: "true"
+        DEV: "true"
+    command: [ "pytest" ]
+    volumes:
+      - .:/opt
+      - /opt/data/postgres
+    environment:
+      POSTGRES_DATABASE_URL_ENV: "postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}"
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+      AWS_DEFAULT_REGION: "${AWS_DEFAULT_REGION}"
+      S3_ENDPOINT_URL: "${S3_ENDPOINT_URL}"
+    depends_on:
+      - s3
+      - postgres
+    networks:
+      - local_network
+
+
+
   postgres:
     env_file:
       - local.env
