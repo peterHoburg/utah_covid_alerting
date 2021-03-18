@@ -59,7 +59,7 @@ services:
         ENVIRONMENT: "data_loader"
         DEGUB: "true"
         DEV: "true"
-    command: [ "pytest" ]
+    command: [ "pytest", "-rP" ]
     volumes:
       - .:/opt
       - /opt/data/postgres
