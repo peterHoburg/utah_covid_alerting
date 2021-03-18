@@ -13,6 +13,7 @@ jobs:
         run: docker-compose build --parallel
       
   tests:
+    needs: build
     runs-on: ubuntu-20.04
     steps:
     - name: Run docker-compose test
