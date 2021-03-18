@@ -1,5 +1,5 @@
-[![Run Tests](https://github.com/peterHoburg/utah_covid_alerting/actions/workflows/run_tests.yml/badge.svg)](
-https://github.com/peterHoburg/utah_covid_alerting/actions/workflows/run_tests.yml)
+[![Tests](https://github.com/peterHoburg/utah_covid_alerting/actions/workflows/tests.yml/badge.svg)](
+https://github.com/peterHoburg/utah_covid_alerting/actions/workflows/tests.yml)
 
 # Setup
 To follow this readme and run this project, first install Docker and docker-compose.
