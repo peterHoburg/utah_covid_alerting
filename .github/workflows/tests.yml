@@ -10,16 +10,16 @@ on:
 
 jobs:
 
-  build: 
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: Docker-compose build
-        run: docker-compose --env-file local.env build --parallel
+#   build: 
+#     runs-on: ubuntu-20.04
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Docker-compose build
+#         run: docker-compose --env-file local.env build --parallel
         # TODO The data is not being cached and passed to the next job. Cache build data for the run.
       
   tests:
-    needs: build
+#     needs: build
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
