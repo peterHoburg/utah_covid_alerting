@@ -37,7 +37,7 @@ async def integrity_error_handler(request: Request, exc: IntegrityError):
 
 @app.get("/", include_in_schema=False)
 def root():
-    return {"hello": "world"}
+    return {"msg": "root"}
 
 
 if __name__ == '__main__':
