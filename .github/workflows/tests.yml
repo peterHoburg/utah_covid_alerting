@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
-    - name: Run docker-compose test
-      run: docker-compose --env-file local.env -f docker-compose.yaml run --rm test
+    - name: Run tests in docker with a local db
+      run: make test
     - name: Kill all running containers
-      run: docker ps -q | xargs -r docker kill
+      run: make kill_all_containers
