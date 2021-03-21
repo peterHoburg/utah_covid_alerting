@@ -19,6 +19,9 @@ data_loader: _base
 db_only: _base
 	docker-compose --env-file $(env_file_name) up --abort-on-container-exit --remove-orphans postgres
 
+test: _base initialize_pg
+	docker-compose --env-file $(env_file_name) -f docker-compose.yaml up --abort-on-container-exit --remove-orphans test
+
 
 ### Commands to alter postgres data
 
