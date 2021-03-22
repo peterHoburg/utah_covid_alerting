@@ -27,7 +27,7 @@ Base = declarative_base()
 
 UTAH_COVID19_DOWNLOAD_URL = "https://coronavirus-dashboard.utah.gov/Utah_COVID19_data.zip"
 
-YYYY_MM_DD_REGEX = re.compile("2\d{3}-\d{2}-\d{2}")
+YYYY_MM_DD_REGEX = re.compile("2[0-9]{3}-[0-9]{2}-[0-9]{2}")
 
 S3_CLIENT = boto3.client('s3', config=Config(signature_version='s3v4'), endpoint_url=os.environ.get('S3_ENDPOINT_URL'))
 S3_DATA_BUCKET = "utah-data"

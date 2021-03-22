@@ -8,12 +8,12 @@ from utils.database import db_subscriptions, db_email
 from utils.subscriptions import generate_subscription_id
 
 router = APIRouter(
-    prefix="/subscriptions",
+    prefix="/subscription",
     tags=["Subscriptions"]
 )
 
 
-@router.get("/subscription")
+@router.get("")
 async def subscriptions(
     email_verified: bool = Depends(is_email_verified),
     current_user: UserInDB = Depends(get_current_active_user),
@@ -22,7 +22,7 @@ async def subscriptions(
     return db_subscriptions.get_(db, current_user.email)
 
 
-@router.post("/subscription")
+@router.post("")
 async def subscribe(
     school_district: SchoolDistricts,
     email_verified=Depends(is_email_verified),
@@ -39,7 +39,7 @@ async def subscribe(
     db_subscriptions.add_(db, subscription)
 
 
-@router.delete("/subscription")
+@router.delete("")
 async def delete_subscriptions_route(
     districts_to_remove: list[SchoolDistricts],
     email_verified: bool = Depends(is_email_verified),
