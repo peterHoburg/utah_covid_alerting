@@ -3,7 +3,7 @@ import functools
 from config.log import log
 
 
-def pre_post_logger(outer_func=None, logging_level: str = "info"):
+def pre_post_logger(outer_func=None, *, logging_level: str = "info"):
     def _decorate(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
